@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Max Martinez Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100,800;112,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: an engineering drawing sheet. Title block header, projects as numbered drawings, resume as a revision table. */
+:root {
+  --paper: #f2f2f2;
+  --panel: #ffffff;
+  --ink: #0a0a0a;
+  --muted: #5c5c5c;
+  --line: #cdcdcd;
+  --accent: #0a0a0a;
+  --accent-ink: #ffffff;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0a0a0a; --panel: #141414; --ink: #f2f2f2; --muted: #9c9c9c; --line: #2e2e2e; --accent: #f2f2f2; --accent-ink: #0a0a0a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0a0a0a; --panel: #141414; --ink: #f2f2f2; --muted: #9c9c9c; --line: #2e2e2e; --accent: #f2f2f2; --accent-ink: #0a0a0a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--body); font-size: 17px; line-height: 1.6;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px; background-position: -1px -1px;
+  background-attachment: fixed;
+}
+body::before { content: ""; position: fixed; inset: 0; background: var(--paper); opacity: .86; pointer-events: none; z-index: -1; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+.mono { font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+/* nav */
+nav { position: sticky; top: 0; z-index: 5; background: var(--panel); border-bottom: 1px solid var(--line); }
+nav .wrap { display: flex; gap: 8px 22px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; }
+nav strong { font-family: var(--display); font-weight: 800; font-size: 17px; letter-spacing: .02em; }
+nav ul { display: flex; gap: 6px 18px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+nav ul a { text-decoration: none; font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 4px 0; border-bottom: 2px solid transparent; }
+nav ul a:hover { color: var(--ink); border-color: var(--accent); }
+
+/* hero */
+.hero { padding: 56px 0 40px; }
+.sheet { background: var(--panel); border: 2px solid var(--ink); }
+.hero-main { padding: 34px 28px 30px; }
+h1 { font-family: var(--display); font-stretch: 100%; font-weight: 800; font-size: clamp(44px, 9vw, 92px); line-height: .95; margin: 14px 0 18px; letter-spacing: -.01em; text-wrap: balance; }
+h1 span { background: var(--accent); color: var(--accent-ink); padding: 0 .1em; }
+.lede { max-width: 60ch; font-size: 19px; margin: 0 0 24px; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-block; padding: 10px 18px; border: 2px solid var(--ink); text-decoration: none; font-family: var(--mono); font-size: 13px; letter-spacing: .05em; text-transform: uppercase; font-weight: 500; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--ink); }
+.titleblock { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--ink); }
+.titleblock div { padding: 10px 14px; border-right: 1px solid var(--line); }
+.titleblock div:last-child { border-right: 0; }
+.titleblock b { display: block; font-weight: 500; font-size: 15px; line-height: 1.35; margin-top: 2px; }
+
+section { padding: 44px 0; }
+.sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+.sec-head h2 { font-family: var(--display); font-weight: 800; font-size: clamp(26px, 4vw, 36px); margin: 0; line-height: 1.1; text-wrap: balance; }
+
+/* about */
+.about { display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; }
+.about p { margin: 0 0 14px; max-width: 62ch; }
+.facts { background: var(--panel); border: 1px solid var(--line); padding: 4px 18px; align-self: start; }
+.facts dl { margin: 0; }
+.facts div { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.facts div:last-child { border-bottom: 0; }
+.facts dt { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.facts dd { margin: 2px 0 0; font-weight: 500; }
+
+/* projects */
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.card { background: var(--panel); border: 1px solid var(--ink); display: flex; flex-direction: column; }
+.card.wide { grid-column: 1 / -1; }
+.card header { display: flex; justify-content: space-between; gap: 12px; padding: 8px 16px; border-bottom: 1px solid var(--ink); background: var(--ink); color: var(--paper); }
+.card header .mono { color: inherit; opacity: .85; }
+.card .body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.card h3 { font-family: var(--display); font-weight: 800; font-size: 25px; line-height: 1.15; margin: 0; }
+.card p { margin: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 6px; }
+.tags span { font-family: var(--mono); font-size: 12px; border: 1px solid var(--line); padding: 2px 8px; color: var(--muted); }
+.badge { display: inline-block; align-self: flex-start; font-family: var(--mono); font-size: 12px; letter-spacing: .05em; text-transform: uppercase; background: var(--accent); color: var(--accent-ink); padding: 2px 8px; font-weight: 500; }
+
+/* resume table */
+.rows { border: 1px solid var(--ink); background: var(--panel); }
+.row { display: grid; grid-template-columns: 190px 1fr; gap: 8px 24px; padding: 20px 20px; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.row h3 { margin: 0; font-size: 19px; font-weight: 600; line-height: 1.3; }
+.row .org { color: var(--muted); margin: 0 0 8px; }
+.row ul { margin: 0; padding-left: 18px; }
+.row li { margin-bottom: 6px; max-width: 64ch; }
+.skills { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.skills div { background: var(--panel); border: 1px solid var(--line); padding: 16px 18px; }
+.skills h3 { font-family: var(--mono); font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; font-weight: 500; }
+.skills p { margin: 0; }
+
+/* contact */
+.contact { background: var(--ink); color: var(--paper); padding: 34px 28px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: center; }
+.contact h2 { font-family: var(--display); font-weight: 800; font-size: clamp(28px, 5vw, 44px); line-height: 1.05; margin: 0 0 10px; text-wrap: balance; }
+.contact p { margin: 0; max-width: 46ch; }
+.contact ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.contact a { display: flex; justify-content: space-between; padding: 10px 14px; border: 1px solid var(--paper); text-decoration: none; font-family: var(--mono); font-size: 13.5px; }
+.contact a:hover { background: var(--paper); border-color: var(--paper); color: var(--ink); }
+footer { padding: 26px 0 50px; }
+
+@media (max-width: 760px) {
+  .about, .contact, .grid, .skills { grid-template-columns: 1fr; }
+  .titleblock { grid-template-columns: 1fr 1fr; }
+  .titleblock div:nth-child(2) { border-right: 0; }
+  .titleblock div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .row { grid-template-columns: 1fr; gap: 4px; }
+  .hero { padding-top: 32px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn:hover { transform: none; } }
+
+/* hero graphic */
+.hero-main { display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items: center; }
+.plate { margin: 0; border: 1px solid var(--line); background: var(--paper); padding: 8px; }
+.plate .spooltxt { font-family: var(--mono); font-size: 12px; font-weight: 500; fill: #111; letter-spacing: .12em; }
+.plate svg { display: block; width: 100%; height: auto; filter: grayscale(1); }
+.plate .ln, .plate .lead, .plate .dim, .plate .cl, .plate .hub, .plate .track, .plate .tread { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.plate .fill { fill: var(--panel); }
+.plate .thick { stroke-width: 4; }
+.plate .hub { fill: var(--accent); stroke: var(--ink); }
+.plate .cl { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 14 4 2 4; }
+.plate .lead { stroke: var(--accent); stroke-width: 1.2; }
+.plate .dim { stroke: var(--muted); stroke-width: 1; }
+.plate .track { stroke-width: 1; stroke: var(--muted); }
+.plate .tread { stroke-width: 9; stroke-dasharray: 10 6; stroke: var(--ink); animation: tread 2.4s linear infinite; }
+.plate .spin { animation: spin 6s linear infinite; transform-origin: 0 0; }
+.plate text { font-family: var(--mono); font-size: 11px; fill: var(--ink); letter-spacing: .06em; }
+@keyframes tread { to { stroke-dashoffset: -16; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .plate .tread, .plate .spin { animation: none; } }
+
+
+.plate .arrowhead { fill: var(--muted); }
+.plate .layer-bg { fill: var(--accent); }
+.plate .layer-line { stroke: var(--ink); stroke-width: 1; opacity: .4; }
+.plate .part { fill: url(#lay); stroke: var(--ink); stroke-width: 1.6; transform-box: fill-box; transform-origin: 50% 100%; animation: grow 10s linear infinite; }
+.plate .fil { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.plate .rise { animation: rise 10s linear infinite; }
+.plate .wipe { transform-box: fill-box; transform-origin: 50% 100%; animation: grow 10s linear infinite; }
+.plate .sweep { animation: sweep 1.1s ease-in-out infinite alternate; }
+@keyframes rise { 0% { transform: translateY(0); } 90%, 100% { transform: translateY(-90px); } }
+@keyframes grow { 0% { transform: scaleY(.02); } 90%, 100% { transform: scaleY(1); } }
+@keyframes sweep { from { transform: translateX(-36px); } to { transform: translateX(36px); } }
+@media (prefers-reduced-motion: reduce) { .plate .part, .plate .wipe, .plate .sweep { animation: none; } .plate .rise { animation: none; transform: translateY(-90px); } }
+
+/* project list */
+.plist { list-style: none; margin: 0; padding: 0; border: 1px solid var(--ink); background: var(--panel); }
+.plist li { display: grid; grid-template-columns: 150px 1fr; gap: 6px 24px; padding: 18px 20px; border-bottom: 1px solid var(--line); }
+.plist li:last-child { border-bottom: 0; }
+.plist h3 { font-family: var(--display); font-weight: 800; font-size: 21px; line-height: 1.25; margin: 0 0 4px; }
+.plist p { margin: 0; max-width: 66ch; color: var(--muted); }
+.plist .badge { font-style: normal; margin-left: 8px; vertical-align: 2px; }
+@media (max-width: 760px) { .hero-main { grid-template-columns: 1fr; } .plist li { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <strong>MAX MARTINEZ</strong>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#resume">Resume</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="hero">
+    <div class="sheet">
+      <div class="hero-main">
+        <div class="hero-text">
+          <span class="mono">Portfolio / Mechanical + Robotics</span>
+          <h1>Max Martinez</h1>
+          <p class="lede">Mechanical engineering technology student at NJIT. I model in CAD, print and assemble the parts, wire the electronics, and test until the machine does its job.</p>
+          <div class="cta">
+            <a class="btn primary" href="#projects">See what I built</a>
+            <a class="btn" href="#resume">Experience</a>
+          </div>
+        </div>
+        <figure class="plate" aria-label="Illustration of an enclosed FDM 3D printer printing an orange vase layer by layer">
+          <svg viewBox="0 0 520 390" role="img" aria-hidden="true">
+            <defs>
+              <linearGradient id="bodyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a414b"/><stop offset=".5" stop-color="#2a2f37"/><stop offset="1" stop-color="#1b1f25"/></linearGradient>
+              <linearGradient id="wallG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#59606c"/><stop offset="1" stop-color="#2b3038"/></linearGradient>
+              <linearGradient id="railG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#aab2bd"/><stop offset=".5" stop-color="#6e7681"/><stop offset="1" stop-color="#3b414a"/></linearGradient>
+              <linearGradient id="railH" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c5ccd5"/><stop offset=".5" stop-color="#7c8591"/><stop offset="1" stop-color="#454c56"/></linearGradient>
+              <linearGradient id="plateG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4d4d4d"/><stop offset="1" stop-color="#232323"/></linearGradient>
+              <linearGradient id="partG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff"/><stop offset=".4" stop-color="#e4e4e4"/><stop offset="1" stop-color="#a8a8a8"/></linearGradient>
+              <linearGradient id="shade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".3" stop-color="#fff" stop-opacity="0"/><stop offset=".75" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></linearGradient>
+              <linearGradient id="cone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6dc" stop-opacity=".28"/><stop offset="1" stop-color="#fff6dc" stop-opacity="0"/></linearGradient>
+              <pattern id="lay" width="6" height="3" patternUnits="userSpaceOnUse"><rect width="6" height="3" fill="url(#partG)"/><rect y="2.2" width="6" height=".8" fill="#000" opacity=".22"/></pattern>
+              <g id="bot">
+                <rect x="220" y="280" width="80" height="16" rx="8"/>
+                <rect x="229" y="246" width="62" height="36" rx="4"/>
+                <rect x="239" y="221" width="42" height="27" rx="6"/>
+                <rect x="216" y="252" width="14" height="24" rx="4"/>
+                <rect x="290" y="252" width="14" height="24" rx="4"/>
+                <rect x="258.5" y="208" width="3" height="15"/>
+                <circle cx="260" cy="208" r="4.5"/>
+              </g>
+              <clipPath id="reveal"><rect class="wipe" x="200" y="200" width="120" height="96"/></clipPath>
+              <filter id="blur6"><feGaussianBlur stdDeviation="6"/></filter>
+              <filter id="blur2"><feGaussianBlur stdDeviation="2.5"/></filter>
+            </defs>
+
+            <ellipse cx="260" cy="372" rx="196" ry="12" fill="#000" opacity=".3" filter="url(#blur6)"/>
+            <rect x="108" y="350" width="46" height="12" rx="3" fill="#0d0f12"/>
+            <rect x="366" y="350" width="46" height="12" rx="3" fill="#0d0f12"/>
+
+            <!-- filament spool, seen edge-on -->
+            <rect x="300" y="26" width="9" height="44" rx="3" fill="#20242a"/>
+            <rect x="309" y="32" width="92" height="32" fill="url(#partG)"/>
+            <rect x="309" y="32" width="92" height="32" fill="url(#lay)" opacity=".5"/>
+            <rect x="401" y="26" width="9" height="44" rx="3" fill="#20242a"/>
+            <text x="355" y="53" text-anchor="middle" class="spooltxt">PETG</text>
+
+            <!-- body -->
+            <rect x="90" y="70" width="340" height="282" rx="16" fill="url(#bodyG)"/>
+            <path d="M106 71 H414" stroke="#6b7480" stroke-width="1.5" opacity=".7"/>
+            <rect x="90.5" y="70.5" width="339" height="281" rx="16" fill="none" stroke="#0c0e11" stroke-width="1"/>
+
+            <!-- chamber -->
+            <rect x="110" y="98" width="300" height="224" rx="9" fill="#0b0d10"/>
+            <rect x="114" y="102" width="292" height="216" rx="6" fill="url(#wallG)"/>
+            <polygon points="134,108 386,108 404,230 116,230" fill="url(#cone)"/>
+            <rect x="132" y="104" width="256" height="4" rx="2" fill="#fff6dc" filter="url(#blur2)"/>
+            <rect x="132" y="104" width="256" height="3" rx="1.5" fill="#fffaf0"/>
+            <!-- floor and uprights -->
+            <rect x="114" y="310" width="292" height="8" fill="#1b1f25"/>
+            <rect x="120" y="108" width="8" height="206" fill="url(#railG)"/>
+            <rect x="392" y="108" width="8" height="206" fill="url(#railG)"/>
+            <!-- build plate -->
+            <rect x="222" y="304" width="76" height="8" fill="#14171b"/>
+            <polygon points="150,296 370,296 386,306 134,306" fill="url(#plateG)"/>
+            <rect x="134" y="306" width="252" height="6" rx="2" fill="#1a1d22"/>
+            <polygon points="150,296 370,296 372,298 148,298" fill="#000" opacity=".25"/>
+
+            <!-- part: a small tracked robot -->
+            <g clip-path="url(#reveal)">
+              <use href="#bot" fill="url(#lay)" stroke="#2a2a2a" stroke-width="1"/>
+              <use href="#bot" fill="url(#shade)"/>
+              <rect x="248" y="229" width="24" height="9" rx="2" fill="#1c1c1c"/>
+              <rect x="252" y="231.5" width="6" height="4" rx="1" fill="#e8e8e8"/>
+              <rect x="262" y="231.5" width="6" height="4" rx="1" fill="#e8e8e8"/>
+              <rect x="238" y="256" width="44" height="3" fill="#1c1c1c" opacity=".35"/>
+              <rect x="244" y="264" width="32" height="10" rx="2" fill="#1c1c1c" opacity=".25"/>
+              <circle cx="232" cy="288" r="4" fill="#1c1c1c" opacity=".4"/>
+              <circle cx="260" cy="288" r="4" fill="#1c1c1c" opacity=".4"/>
+              <circle cx="288" cy="288" r="4" fill="#1c1c1c" opacity=".4"/>
+            </g>
+
+            <!-- gantry -->
+            <g class="rise">
+              <rect x="126" y="250" width="268" height="11" rx="2" fill="url(#railH)"/>
+              <g class="sweep">
+                <rect x="238" y="256" width="44" height="28" rx="4" fill="#20242a" stroke="#0b0d10"/>
+                <rect x="242" y="260" width="36" height="8" rx="2" fill="#3a414b"/>
+                <rect x="246" y="270" width="28" height="11" rx="2" fill="#555d69"/>
+                <polygon points="252,284 268,284 260,295" fill="#d9a441"/>
+              </g>
+            </g>
+
+            <!-- glass reflections and frame -->
+            <polygon points="114,102 224,102 146,318 114,318" fill="#fff" opacity=".07"/>
+            <polygon points="256,102 296,102 218,318 178,318" fill="#fff" opacity=".05"/>
+            <rect x="110" y="98" width="300" height="224" rx="9" fill="none" stroke="#0b0d10" stroke-width="3"/>
+            <rect x="111.5" y="99.5" width="297" height="221" rx="8" fill="none" stroke="#7b8490" stroke-width=".8" opacity=".5"/>
+
+            <!-- front panel -->
+            <circle cx="124" cy="337" r="6" fill="#46e08a" opacity=".55" filter="url(#blur2)"/>
+            <circle cx="124" cy="337" r="3" fill="#6bf0a5"/>
+            <rect x="368" y="326" width="42" height="20" rx="3" fill="#08121e" stroke="#4a5360"/>
+            <rect x="373" y="331" width="22" height="3" rx="1" fill="#4fb3ff"/>
+            <rect x="373" y="337" width="14" height="3" rx="1" fill="#7a8696"/>
+          </svg>
+        </figure>
+      </div>
+      <div class="titleblock">
+        <div><span class="mono">School</span><b>NJIT, B.S. MET</b></div>
+        <div><span class="mono">Graduating</span><b>May 2028</b></div>
+        <div><span class="mono">Focus</span><b>Robotics, CAD, fabrication</b></div>
+        <div><span class="mono">Orgs</span><b>ASME, IEEE, Prosthetics Club</b></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="sec-head"><span class="mono">01</span><h2>About</h2></div>
+    <div class="about">
+      <div>
+        <p>I like machines I can hold, test and break on purpose. My work sits where mechanical design meets electronics and control: an assembly in Fusion 360, a motor controller on the bench, and a printed bracket that has to survive a day of testing.</p>
+        <p>This year I interned at Human Friendly Robotics, a pre-seed robotics startup in Marlboro, NJ. I led three interns building Trey, an autonomous data center cable-management robot, and built the chassis for Tyler, a 50 lb autonomous flooring robot.</p>
+        <p>On campus I serve as Secretary of the NJIT Prosthetics Club and lead our animal prosthetics project, with 50+ active members across the club.</p>
+      </div>
+      <div class="facts">
+        <dl>
+          <div><dt>Studying</dt><dd>Mechanical Engineering Technology, NJIT</dd></div>
+          <div><dt>Role</dt><dd>Secretary and Animal Prosthetics Project Lead, NJIT Prosthetics Club</dd></div>
+          <div><dt>Memberships</dt><dd>ASME, IEEE</dd></div>
+          <div><dt>Looking for</dt><dd>Mechanical and robotics internships</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head"><span class="mono">02</span><h2>What I built</h2></div>
+    <ol class="plist">
+      <li><span class="mono">Nov 2026</span><div><h3>Autonomous 3D print removal arm</h3><p>UFactory xArm 6 with a RealSense depth camera, integrated through Viam. Trained a YOLO model on a custom dataset to tell failed prints from good ones, with a closed loop that verifies a cleared bed and restarts jobs.</p></div></li>
+      <li><span class="mono">Sep 2026</span><div><h3>Groundwork <em class="badge">2nd of 40 teams</em></h3><p>Dell x NVIDIA AI Hackathon. A predictive maintenance prototype that flags bearing inner-race faults and other mechanical fault signatures from vibration data, built with a 4-person team across ECE, CS and CE.</p></div></li>
+      <li><span class="mono">Mar to Sep 2026</span><div><h3>Trey, data center cable-management robot</h3><p>Led 3 interns through design, build and testing. Its Ethernet test switch verifies up to 8 cables at once. Fusion 360 assemblies with linear actuators, hinge clamps and custom brackets; RoboClaw, Teensy 4.1 and Raspberry Pi for motor control and odometry.</p></div></li>
+      <li><span class="mono">2026</span><div><h3>Tyler, autonomous flooring robot</h3><p>Assembled and wired the chassis of a 50 lb Jetson-powered robot rated for ±1 mm tile placement. Calibrated placement and added an IMU to stabilize tile pickup.</p></div></li>
+      <li><span class="mono">Feb 2026 to present</span><div><h3>Custom prosthetic for a three-legged dog</h3><p>Co-lead for the NJIT Prosthetics Club. Standardized member CAD parts and tuned print settings (45% infill, 5 wall loops) for strength.</p></div></li>
+      <li><span class="mono">Feb to Apr 2026</span><div><h3>NeuroMaker and BCI prosthetic hand</h3><p>Multi-articulated hand with high-torque servos and custom linkages. C++ firmware on Arduino turns EEG attention levels into gestures, with calibrated thresholds and filters to cut false activations.</p></div></li>
+    </ol>
+  </section>
+
+  <section id="resume">
+    <div class="sec-head"><span class="mono">03</span><h2>Experience and skills</h2></div>
+    <div class="rows">
+      <div class="row">
+        <div><span class="mono">Mar 2026 to Sep 2026</span></div>
+        <div>
+          <h3>Robotics Engineering Intern</h3>
+          <p class="org">Human Friendly Robotics (pre-seed), Marlboro, NJ</p>
+          <ul>
+            <li>Led 3 interns through design, build and testing of Trey, an autonomous data center cable-management robot whose Ethernet test switch verifies up to 8 cables at once.</li>
+            <li>Designed Fusion 360 assemblies with linear actuators, motors, hinge clamps and custom mounting brackets.</li>
+            <li>Maintained a 6-printer FDM fleet and tuned print settings and material (PETG), cutting failed prints from 2 to 5 per day to 1 to 2 per day, about a 50% reduction.</li>
+            <li>Integrated motors, wheel encoders and RoboClaw controllers with a Teensy 4.1 and Raspberry Pi for motor control and odometry navigation.</li>
+            <li>Assembled and wired the chassis for Tyler, a 50 lb autonomous flooring robot (NVIDIA Jetson) rated for ±1 mm tile placement; calibrated placement and added an IMU to stabilize tile pickup.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div><span class="mono">Feb 2026 to present</span></div>
+        <div>
+          <h3>Secretary and Animal Prosthetics Project Lead</h3>
+          <p class="org">NJIT Prosthetics Club, Newark, NJ</p>
+          <ul>
+            <li>Co-leading the design of a custom prosthetic for a three-legged dog.</li>
+            <li>Review member CAD designs and standardize parts to move teams from prototypes to full assemblies.</li>
+            <li>Optimized FDM print settings (45% infill, 5 wall loops) to improve strength and impact resistance.</li>
+            <li>Manage communications and documentation between project leads and 50+ active members.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div><span class="mono">Expected May 2028</span></div>
+        <div>
+          <h3>B.S. Mechanical Engineering Technology</h3>
+          <p class="org">New Jersey Institute of Technology, Newark, NJ</p>
+          <ul>
+            <li>Organizations: ASME, IEEE, NJIT Prosthetics Club.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="skills" style="margin-top:20px">
+      <div><h3>CAD and design</h3><p>Fusion 360, SolidWorks, Inventor, Onshape, AutoCAD, KiCad</p></div>
+      <div><h3>Manufacturing and prototyping</h3><p>FDM 3D printing, print-fleet maintenance, assembly, QA inspection</p></div>
+      <div><h3>Electronics and controls</h3><p>NVIDIA Jetson, Teensy 4.1, Arduino, Raspberry Pi, ESP-32, RoboClaw controllers, encoders, IMU sensors</p></div>
+      <div><h3>Programming</h3><p>C++, Python, MATLAB</p></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="sec-head"><span class="mono">04</span><h2>Contact</h2></div>
+    <div class="contact">
+      <div>
+        <h2>Building something that needs hardware?</h2>
+        <p>I am looking for a mechanical or robotics engineering internship. Send a note and I will reply.</p>
+      </div>
+      <ul>
+        <li><a href="mailto:mam438@njit.edu"><span>Email</span><span>mam438@njit.edu</span></a></li>
+        <li><a href="https://www.linkedin.com/in/maxm51511"><span>LinkedIn</span><span>/in/maxm51511</span></a></li>
+        <li><a href="https://github.com/maxm51511-ship-it"><span>GitHub</span><span>/maxm51511-ship-it</span></a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span class="mono">Max Martinez, 2026</span></div>
+</footer>
+</body>
+</html>
